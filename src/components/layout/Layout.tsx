@@ -23,9 +23,9 @@ const Layout: NextPage = ({ children }) => {
         <SidebarItems />
       </div>
       {/* maincontent */}
-      <div className='w-full ml-[14rem] '>
+      <div className='w-full min-h-screen ml-[14rem] bg-[#f7f8fb] '>
         <NavBar />
-        {children}
+        <div className='p-10'>{children}</div>
       </div>
     </div>
   )
