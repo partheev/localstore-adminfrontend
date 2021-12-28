@@ -1,5 +1,6 @@
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag'
+import { routes } from '../../../routing'
 export interface subroute {
   name: string
   route: string
@@ -16,7 +17,7 @@ export const sideBarRouteList: routeList[] = [
     subroutes: [
       {
         name: 'Analytics',
-        route: '/dashboard/analytics',
+        route: routes.Analytics,
       },
     ],
   },
@@ -26,11 +27,11 @@ export const sideBarRouteList: routeList[] = [
     subroutes: [
       {
         name: 'Manage Products',
-        route: '/products/manageproducts',
+        route: routes.ManageProducts,
       },
       {
         name: 'Add Products',
-        route: '/products/addProducts',
+        route: routes.AddProduct,
       },
     ],
   },

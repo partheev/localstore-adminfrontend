@@ -2,9 +2,11 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 
 import { useState } from 'react'
+import { routes } from '../../../routing'
+import Link from 'next/link'
 
 export const DropDown = () => {
-  const [open, setopen] = useState(true)
+  const [open, setopen] = useState(false)
   const arr = ['few', 'some', 'all']
   return (
     <div className='ml-10'>
@@ -42,9 +44,11 @@ export const DropDown = () => {
 
 export const AddProductButton = () => {
   return (
-    <div className='bg-blue-400 p-2 h-10 flex items-center  rounded-lg text-white cursor-pointer '>
-      <AddCircleOutlineIcon sx={{ marginRight: '0.7rem' }} />
-      <span>Add Product</span>
-    </div>
+    <Link href={routes.AddProduct}>
+      <div className='bg-blue-400 p-2 h-10 flex items-center  rounded-lg text-white cursor-pointer '>
+        <AddCircleOutlineIcon sx={{ marginRight: '0.7rem' }} />
+        <span>Add Product</span>
+      </div>
+    </Link>
   )
 }
