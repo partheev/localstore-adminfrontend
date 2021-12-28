@@ -2,7 +2,10 @@ import {
   AddProductButton,
   DropDown,
 } from '../../components/layout/addProduct/filterRow'
-import { ProductsList } from '../../components/layout/addProduct/product'
+import {
+  ProductsList,
+  ProductTitleRow,
+} from '../../components/layout/addProduct/product'
 
 const ManageProducts = () => {
   return (
@@ -16,6 +19,7 @@ const ManageProducts = () => {
         </div>
         <AddProductButton />
       </div>
+      <ProductTitleRow />
       <ProductsList />
     </div>
   )
