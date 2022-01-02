@@ -1,11 +1,11 @@
 import {
   AddProductButton,
   DropDown,
-} from '../../components/layout/addProduct/filterRow'
+} from '../../../components/products/filterRow'
 import {
   ProductsList,
   ProductTitleRow,
-} from '../../components/layout/addProduct/product'
+} from '../../../components/products/product'
 
 const ManageProducts = () => {
   return (

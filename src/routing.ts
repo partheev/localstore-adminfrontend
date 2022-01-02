@@ -1,5 +1,9 @@
 export const routes = {
-  AddProduct: '/products/addproducts',
-  Analytics: '/dashboard/analytics',
-  ManageProducts: '/products/manageproducts',
+  AddProduct: '/admin/products/addproducts',
+  Analytics: '/admin/dashboard/analytics',
+  ManageProducts: '/admin/products/manageproducts',
+  Login: '/admin/login',
+}
+export const apiRoutes = {
+  login: 'http://localhost:5000/api/admin/login',
 }

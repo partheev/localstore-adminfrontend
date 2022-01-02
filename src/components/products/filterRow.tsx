@@ -2,7 +2,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 
 import { useState } from 'react'
-import { routes } from '../../../routing'
+import { routes } from '../../routing'
 import Link from 'next/link'
 
 export const DropDown = () => {

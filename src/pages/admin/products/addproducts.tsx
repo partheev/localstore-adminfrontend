@@ -1,10 +1,34 @@
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
-import { useState } from 'react'
 
-const addproducts = () => {
+import { ReactNode, useState } from 'react'
+import {
+  AddProductImageUpload,
+  CategoryField,
+  HighlightPoints,
+  TextField,
+} from '../../../components/products/newproductform'
+
+const FlexWrap = ({ children }: { children: ReactNode }) => {
+  return <div className='flex flex-wrap'>{children}</div>
+}
+
+const Addproducts = () => {
   const [categoryPop, setCategoryPop] = useState(false)
+  const [category, setcategory] = useState('')
   const [discountType, setDiscountType] = useState('')
-
+  const formData = {
+    prodNameRef: '',
+    brandNameRef: '',
+    descriptionRef: '',
+    categoryRef: '',
+    priceRef: '',
+    availQtyRef: '',
+    highlightPoints: [''],
+    discountPriceRef: '',
+    discountPercentRef: '',
+    radiusRef: '',
+    deliveryChargeRef: '',
+  }
   const NewCategory = () => {
     const [category, setcategory] = useState('')
     return (
@@ -46,28 +70,7 @@ const addproducts = () => {
       </div>
     )
   }
-  const TextField = ({
-    tag,
-    placeholder,
-    size,
-  }: {
-    tag: string
-    placeholder: string
-    size: string
-  }) => {
-    return (
-      <div className={` md:w-${size} w-full p-3`}>
-        <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>
-          {tag}
-        </label>
-        <input
-          className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-          type='text'
-          placeholder={placeholder}
-        ></input>
-      </div>
-    )
-  }
+
   const DiscountType = ({ value }: { value: string }) => {
     if (value === 'percent') {
       return (
@@ -75,6 +78,8 @@ const addproducts = () => {
           tag='Discount Percentage(%)'
           placeholder='Enter  discount pecentage'
           size='2/6'
+          formData={formData}
+          Okey='discountPercentRef'
         />
       )
     } else if (value === 'price') {
@@ -83,6 +88,8 @@ const addproducts = () => {
           tag='Discount Price($)'
           placeholder='Enter  discount price'
           size='2/6'
+          formData={formData}
+          Okey='discountPriceRef'
         />
       )
     } else {
@@ -95,43 +102,27 @@ const addproducts = () => {
       <div className={categoryPop ? 'blur none' : ''}>
         <div className=' text-xl  mb-5 font-bold'>Add New Product</div>
         <div className='rounded-xl min-h-screen w-full bg-white'>
-          <form className='pt-1 pl-8 pr-4'>
+          <form className='pt-1 pb-10 pl-8 pr-4'>
             <Title no={1} name={'Product Details'} />
-            <div className='flex flex-wrap'>
+            <FlexWrap>
               <TextField
                 tag='PRODUCT NAME'
                 placeholder='Enter product name'
                 size='2/6'
+                formData={formData}
+                Okey='prodNameRef'
               />
               <TextField
                 tag='BRAND NAME'
                 placeholder='Enter product brand'
                 size='2/6'
+                formData={formData}
+                Okey='brandNameRef'
               />
-
-              <div className='w-full md:w-2/6 p-3 mb-6 md:mb-0'>
-                <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>
-                  CATEGORY
-                </label>
-                <div className='relative'>
-                  <select
-                    className='block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
-                    onChange={(e) => {
-                      if (e.target.value === 'add') setCategoryPop(true)
-                    }}
-                  >
-                    <option value='no' selected disabled hidden>
-                      Choose here
-                    </option>{' '}
-                    <option value='add'>+ Add New Category</option>
-                    <option value='miss'>Missouri</option>
-                    <option value='texas'>Texas</option>
-                  </select>
-                  <div className='pointer-events-none rotate-90 absolute inset-y-0 right-0 flex items-center px-2 text-gray-700'>
-                    <ArrowForwardIosIcon sx={{ fontSize: '1rem' }} />
-                  </div>
-                </div>
-              </div>
+              <CategoryField
+                setcategory={formData}
+                setCategoryPop={setCategoryPop}
+              />
 
               <div className='w-full md:w-2/3 p-3'>
                 <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>
@@ -146,14 +137,20 @@ const addproducts = () => {
                 tag='AVAILABLE QUANTITY'
                 placeholder='Enter stock available'
                 size='2/6'
+                formData={formData}
+                Okey='availQtyRef'
               />
-            </div>
+              <HighlightPoints allpointsRef={formData.highlightPoints} />
+            </FlexWrap>
+
             <Title no={2} name={'Pricing Details'} />
-            <div className='flex flex-wrap'>
+            <FlexWrap>
               <TextField
                 tag='Product Price'
                 placeholder='Enter price of product'
                 size='2/6'
+                formData={formData}
+                Okey='priceRef'
               />
 
               <div className='w-full md:w-2/6 p-3 mb-6 md:mb-0'>
@@ -176,7 +173,27 @@ const addproducts = () => {
                 </div>
               </div>
               <DiscountType value={discountType} />
-            </div>
+            </FlexWrap>
+            <Title no={3} name={'Delivery Options'} />
+            <FlexWrap>
+              <TextField
+                tag={'Radius (in Kms)'}
+                placeholder='Select radius you can delivery.'
+                size='2/6'
+                formData={formData}
+                Okey='radiusRef'
+              />
+              <TextField
+                tag={'Delivery Charge (enter 0 for free delivery)'}
+                placeholder='Select radius you can delivery.'
+                size='2/6'
+                formData={formData}
+                Okey='deliveryChargeRef'
+              />
+            </FlexWrap>
+            <Title no={4} name={'Upload Images'} />
+            <AddProductImageUpload />
+            <div onClick={() => console.log(formData)}>submit</div>
           </form>
         </div>
       </div>
@@ -184,4 +201,4 @@ const addproducts = () => {
   )
 }
 
-export default addproducts
+export default Addproducts

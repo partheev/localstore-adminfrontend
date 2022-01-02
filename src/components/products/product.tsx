@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { Product } from '../../typedeclarations'
+import { Product } from '../typedeclarations'
 
 export const ProductTitleRow = () => {
   return (
@@ -57,11 +57,14 @@ export const ProductsList = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      let { data }: { data: Product[] } = await axios.get(
-        'http://localhost:5000/api/all-products'
-      )
-      console.log(data)
-      setproducts(data)
+      try {
+        let { data }: { data: Product[] } = await axios.get(
+          'http://localhost:5000/api/all-products'
+        )
+        setproducts(data)
+      } catch (err) {
+        setproducts([])
+      }
     }
     fetchProducts()
   }, [])

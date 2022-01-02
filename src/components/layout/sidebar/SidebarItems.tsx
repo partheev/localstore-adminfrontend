@@ -8,7 +8,7 @@ const SubItem = ({ item, urls }: { item: subroute; urls: string[] }) => {
   const [open, setOpen] = useState(false)
   useEffect(() => {
     if (urls.length > 1) {
-      const currPath = item.route.substring(1).split('/')[1]
+      const currPath = item.route.substring(1).split('/')[2]
       if (currPath === urls[1]) {
         setOpen(true)
       } else {
@@ -42,7 +42,7 @@ const MainTitle = ({ items, urls }: { items: routeList; urls: string[] }) => {
   const [open, setOpen] = useState(false)
   useEffect(() => {
     if (urls.length > 1) {
-      const currPath = items.subroutes[0].route.substring(1).split('/')[0]
+      const currPath = items.subroutes[0].route.substring(1).split('/')[1]
       if (currPath === urls[0]) {
         setOpen(true)
       } else {
@@ -83,13 +83,15 @@ const MainTitle = ({ items, urls }: { items: routeList; urls: string[] }) => {
 const SidebarItems = () => {
   const router = useRouter()
   const currUrl = router.pathname
-  let modifiedUrlArray = currUrl.substring(1).split('/', 2)
+  let modifiedUrlArray = currUrl.substring(1).split('/', 3)
+  modifiedUrlArray.splice(0, 1)
   const [urlList, seturlList] = useState(modifiedUrlArray)
 
   useEffect(() => {
     const handleRouteChange = (u: string, { shallow }: { shallow: any }) => {
       const modifiedUrl = u.substring(1)
-      modifiedUrlArray = modifiedUrl.split('/', 2)
+      modifiedUrlArray = modifiedUrl.split('/', 3)
+      modifiedUrlArray.splice(0, 1)
       seturlList([...modifiedUrlArray])
     }
     router.events.on('routeChangeStart', handleRouteChange)
