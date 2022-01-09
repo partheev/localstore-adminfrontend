@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { apiRoutes } from '../../routing'
 import { Product } from '../typedeclarations'
 
 export const ProductTitleRow = () => {
@@ -58,10 +59,9 @@ export const ProductsList = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        let { data }: { data: Product[] } = await axios.get(
-          'http://localhost:5000/api/all-products'
-        )
-        setproducts(data)
+        let res = await axios.get(apiRoutes.Route(apiRoutes.getallproducts))
+        const productsdata = res.data.productsList as Product[]
+        setproducts(productsdata)
       } catch (err) {
         setproducts([])
       }
