@@ -7,8 +7,9 @@
 -   Admin login with credentials
 -   Add product with images
 -   Manage uploaded product with beautiful management panel
+> Dependencies : This app is using two backend applications for authentication and products management.
 
-**NOTE : There's alot of upcoming feature which are still in development phase. Made responsive to desktop and in future releases we focus on responsive to mobiles.**
+**NOTE : Used fake data at backend and there's alot of upcoming feature which are still in development phase. Made responsive to desktop and in future releases we focus on responsive to mobiles.**
 
 ## Few screenshots of this Application
 
