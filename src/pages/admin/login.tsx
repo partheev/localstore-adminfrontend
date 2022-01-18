@@ -2,7 +2,7 @@ import PersonIcon from '@mui/icons-material/Person'
 import LockIcon from '@mui/icons-material/Lock'
 import { Dispatch, SetStateAction, useContext, useState } from 'react'
 import axios from 'axios'
-import { apiRoutes, routes } from '../../routing'
+import { apiAuthRoutes, apiRoutes, routes } from '../../routing'
 import { GlobalContext } from '../_app'
 import { reducerConstants } from '../../components/stateConstants'
 import { useRouter } from 'next/router'
@@ -15,7 +15,7 @@ export default function Login() {
     e.preventDefault()
     try {
       const { data } = await axios.post(
-        apiRoutes.login,
+        apiAuthRoutes.Route(apiAuthRoutes.login),
         {
           username,
           password,

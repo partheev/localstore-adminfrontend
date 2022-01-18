@@ -1,3 +1,29 @@
+# Personal Project for E-commerce application
+
+> FRONTEND APPLICATION FOR ADMIN USERS
+
+## Features
+
+-   Admin login with credentials
+-   Add product with images
+-   Manage uploaded product with beautiful management panel
+
+**NOTE : There's alot of upcoming feature which are still in development phase. Made responsive to desktop and in future releases we focus on responsive to mobiles.**
+
+## Few screenshots of this Application
+
+### Login Page
+
+![Login Page](https://github.com/partheev/localstore-adminfrontend/blob/main/screenshots/loginpage.png)
+
+### Add Product Page ( page is zoomed out )
+
+![Add Product Page](https://github.com/partheev/localstore-adminfrontend/blob/main/screenshots/addproduct.png)
+
+### Manage Products Page
+
+![Manage Products Page](https://github.com/partheev/localstore-adminfrontend/blob/main/screenshots/productmanagement.png)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -22,8 +48,8 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 
 To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+-   [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+-   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 

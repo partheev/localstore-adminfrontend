@@ -5,7 +5,7 @@ export const routes = {
   Login: '/admin/login',
 }
 
-export const authApiRoutes = {
+export const apiAuthRoutes = {
   host: 'localhost',
   protocal: 'http',
   port: 5000,

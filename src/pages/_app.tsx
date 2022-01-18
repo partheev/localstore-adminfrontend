@@ -30,7 +30,7 @@ interface GlobalContextType {
 }
 const initialState: IState = {
   loading: true,
-  login: false,
+  login: true,
   userDetails: null,
 }
 export const GlobalContext = createContext<GlobalContextType>({

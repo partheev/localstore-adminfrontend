@@ -15,6 +15,8 @@ const FlexWrap = ({ children }: { children: ReactNode }) => {
 }
 
 const Addproducts = () => {
+  const [highlightPoints, sethighlightPoints] = useState<string[]>([])
+
   const [categoryPop, setCategoryPop] = useState(false)
   const [categories, setcategories] = useState<string[]>([])
   const [discountType, setDiscountType] = useState('')
@@ -30,6 +32,10 @@ const Addproducts = () => {
     discountPercent: useRef<HTMLInputElement>(),
     radius: useRef<HTMLInputElement>(),
     deliveryCharge: useRef<HTMLInputElement>(),
+  }
+
+  const sethighlightPointsHandler = (points: string[]) => {
+    sethighlightPoints(points)
   }
 
   useEffect(() => {
@@ -49,11 +55,14 @@ const Addproducts = () => {
   }, [])
   const NewCategory = () => {
     const [category, setcategory] = useState('')
+    const [loading, setloading] = useState(false)
     const addCategoryHandler = async () => {
+      setloading(true)
       try {
         const res = await axios.post(apiRoutes.Route(apiRoutes.addcategory), {
           categoryName: category,
         })
+        setcategories([...categories, category])
         setCategoryPop(false)
       } catch (e) {
         console.log(e)
@@ -80,13 +89,22 @@ const Addproducts = () => {
           >
             Close
           </div>
-
-          <button
+          <div
             onClick={addCategoryHandler}
-            className='bg-sky-400 block  p-2 rounded-md'
+            className='bg-sky-400 block text-center text-white w-[8rem] h-[2.5rem]  p-2 rounded-md'
           >
-            Add Category
-          </button>
+            {loading ? (
+              <ReactLoading
+                height={'100%'}
+                width={'25%'}
+                type={'spin'}
+                color={'white'}
+                className='mx-auto'
+              />
+            ) : (
+              'Add Category'
+            )}
+          </div>
         </div>
       </div>
     )
@@ -173,7 +191,10 @@ const Addproducts = () => {
                   size='2/6'
                   ref={productRefs.availableQty}
                 />
-                <HighlightPoints />
+                <HighlightPoints
+                  setPoints={sethighlightPointsHandler}
+                  points={highlightPoints}
+                />
               </FlexWrap>
 
               <Title no={2} name={'Pricing Details'} />

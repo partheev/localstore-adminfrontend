@@ -1,21 +1,14 @@
-import {
-  Dispatch,
-  forwardRef,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import { Dispatch, forwardRef, SetStateAction, useRef, useState } from 'react'
+import imgfile from './loginbg.jpg'
 import CloseIcon from '@mui/icons-material/Close'
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
 import UploadFileIcon from '@mui/icons-material/UploadFile'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 
 import axios from 'axios'
-import { apiRoutes } from '../../routing'
 export const AddProductImageUpload = () => {
-  const key =
-    'https://com-partheev.s3.ap-south-1.amazonaws.com/myKey.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAY3RL4JSTDIB2TYZW%2F20211231%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20211231T112308Z&X-Amz-Expires=1800&X-Amz-SignedHeaders=content-type%3Bhost&X-Amz-Signature=81c86f5fbcf94d476b4645829f2f1787000163acc74c36753831d5ad51e57679'
+  const [imageList, setimageList] = useState<File[]>([])
+  const [showupload, setshowupload] = useState(true)
   const imgref = useRef<HTMLInputElement>(null)
   const handleFileInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (
@@ -23,27 +16,37 @@ export const AddProductImageUpload = () => {
       imgref.current.files &&
       imgref.current.files.length > 0
     ) {
+      console.log(imgref.current.files[0])
       let options = {
         headers: {
           'Content-Type': imgref.current.files[0].type,
         },
       }
-      const res = await axios.post('http://localhost:4000/api/s3-signed-url')
-      console.log(res.data)
-      console.log('sent requset')
-      const { data } = await axios.put(
-        res.data.signedUrl,
-        imgref.current.files[0],
-        options
-      )
-      console.log(e.target.files, data)
+
+      try {
+        const res = await axios.post(
+          'http://localhost:4000/api/s3-signed-url',
+          {
+            productId: 'part123id',
+            filetype: imgref.current.files[0].type,
+          }
+        )
+        
+       await axios.put(
+          res.data.signedUrl,
+          imgref.current.files[0],
+          options
+        )
+      } catch (e) {
+        console.log('signedurl failed')
+      }
     }
   }
   const UploadBox = () => {
     return (
       <div
         onClick={() => (imgref.current ? imgref.current.click() : null)}
-        className='max-w-md flex-col m-auto border-dashed hover:bg-slate-50 cursor-pointer border-2 border-indigo-600 rounded-md flex justify-center items-center h-40 '
+        className='max-w-md flex-col mb-5 mx-auto border-dashed hover:bg-slate-50 cursor-pointer border-2 border-indigo-600 rounded-md flex justify-center items-center h-40 '
       >
         <input
           onChange={handleFileInput}
@@ -57,11 +60,49 @@ export const AddProductImageUpload = () => {
       </div>
     )
   }
-  return (
-    <div className=''>
-      <UploadBox />
-    </div>
-  )
+  const ImageList = () => {
+    const ImageItem = () => {
+      return (
+        <div className='flex flex-wrap'>
+          <img
+            alt='image ecom'
+            className='rounded object-cover w-[7rem] m-2 h-[7rem]'
+            src={imgfile.src}
+          ></img>
+          <img
+            alt='image ecom'
+            className='rounded object-cover w-[7rem] m-2 h-[7rem]'
+            src={imgfile.src}
+          ></img>
+          <img
+            alt='image ecom'
+            className='rounded object-cover w-[7rem] m-2 h-[7rem]'
+            src={imgfile.src}
+          ></img>
+          <div
+            onClick={() => (imgref.current ? imgref.current.click() : null)}
+            className=' flex-col m-2 w-[7rem]  border-dashed hover:bg-slate-50 cursor-pointer border-2 border-indigo-600 rounded-md flex justify-center items-center  '
+          >
+            <input
+              onChange={handleFileInput}
+              ref={imgref}
+              multiple
+              type='file'
+              className='hidden'
+            />
+            <UploadFileIcon sx={{ color: 'blue' }} />
+            <span className='text-slate-400  text-center'>Add more Images</span>
+          </div>
+        </div>
+      )
+    }
+    return (
+      <div className='bg-gray-100 p-2 rounded-md'>
+        <ImageItem />
+      </div>
+    )
+  }
+  return <div className=''>{showupload ? <UploadBox /> : <ImageList />}</div>
 }
 export const CategoryField = ({
   setCategoryPop,
@@ -70,6 +111,8 @@ export const CategoryField = ({
   categories: string[]
   setCategoryPop: Dispatch<SetStateAction<boolean>>
 }) => {
+  const [category, setcategory] = useState('no')
+  console.log('category rendering')
   return (
     <div className='w-full md:w-2/6 p-3 mb-6 md:mb-0'>
       <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>
@@ -77,10 +120,11 @@ export const CategoryField = ({
       </label>
       <div className='relative'>
         <select
-          defaultValue={'no'}
+          value={category}
           className='block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
           onChange={(e) => {
             if (e.target.value === 'add') setCategoryPop(true)
+            else setcategory(e.target.value)
           }}
         >
           <option value='no' disabled hidden>
@@ -89,7 +133,7 @@ export const CategoryField = ({
           <option value='add'>+ Add New Category</option>
           {categories.map((e) => {
             return (
-              <option key={e} value='e'>
+              <option key={e} value={e}>
                 {e}
               </option>
             )
@@ -131,19 +175,24 @@ export const TextField = forwardRef(
   }
 )
 
-export const HighlightPoints = () => {
-  const [points, setpoints] = useState<string[]>([])
+export const HighlightPoints = ({
+  setPoints,
+  points,
+}: {
+  points: string[]
+  setPoints: (x: string[]) => void
+}) => {
   const pointRef = useRef<HTMLInputElement>(null)
   const addProductHandler = () => {
     if (pointRef.current != null && pointRef.current.value != '') {
       points.push(pointRef.current.value)
       pointRef.current.value = ''
-      setpoints([...points])
+      setPoints([...points])
     }
   }
   const deleteProductHandler = (index: number) => {
     points.splice(index, 1)
-    setpoints([...points])
+    setPoints([...points])
   }
   const Point = ({ point, index }: { point: string; index: number }) => {
     return (
